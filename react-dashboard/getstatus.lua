@@ -28,6 +28,7 @@ function botStatus(bot)
         [BotStatus.player_entered] = "Player Entered",
         [BotStatus.getting_server_data] = "Getting Server Data",
         [BotStatus.bypassing_server_data] = "Bypassing Server Data",
+        [BotStatus.couldnt_warp] = "Couldn't Warp",
     }
     return statusNaming[status] or "Loading"
 end

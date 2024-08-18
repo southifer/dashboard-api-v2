@@ -1,0 +1,8 @@
+/* Define base and glowing styles */
+.glow {
+    transition: background-color 1s ease;
+  }
+  
+.glow-update {
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent yellow for glowing effect */
+}
