@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const multer = require('multer');
 const cors = require('cors'); // Import cors
 
 const app = express();
@@ -26,6 +27,9 @@ db.connect(err => {
 // Middleware
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS
+
+// Multer configuration for file upload
+const upload = multer({ dest: 'uploads/' });
 
 // Route to handle POST request
 app.post('/api/users', (req, res) => {
@@ -88,6 +92,63 @@ app.get('/api/users', (req, res) => {
     } else {
       res.json(results);
     }
+  });
+});
+
+// Get all worlds
+app.get('/api/worlds', (req, res) => {
+  db.query('SELECT * FROM worlds', (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// Insert a new world
+app.post('/api/worlds', (req, res) => {
+  const { name, door } = req.body;
+  const sql = 'INSERT INTO worlds (name, door) VALUES (?, ?)';
+  db.query(sql, [name, door], (err, results) => {
+    if (err) throw err;
+    res.json({ success: true, id: results.insertId });
+  });
+});
+
+// Update a world
+app.put('/api/worlds/:index', (req, res) => {
+  const { name, door } = req.body;
+  const { index } = req.params;
+  db.query('UPDATE worlds SET name = ?, door = ? WHERE `index` = ?', [name, door, index], (err, results) => {
+    if (err) throw err;
+    res.json({ success: true });
+  });
+});
+
+// Delete a world
+app.delete('/api/worlds/:index', (req, res) => {
+  const { index } = req.params;
+  db.query('DELETE FROM worlds WHERE `index` = ?', [index], (err, results) => {
+    if (err) throw err;
+    res.json({ success: true });
+  });
+});
+
+// Upload .txt file and parse it
+app.post('/api/worlds/upload', upload.single('file'), (req, res) => {
+  const fs = require('fs');
+  const filePath = req.file.path;
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      return res.status(500).json({ error: 'Error reading file' });
+    }
+
+    const worlds = data.split('\n').map(line => line.split('|'));
+    const sql = 'INSERT INTO worlds (name, door) VALUES ?';
+    db.query(sql, [worlds], (err, results) => {
+      if (err) throw err;
+      res.json({ success: true });
+    });
   });
 });
 

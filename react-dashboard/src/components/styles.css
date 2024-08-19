@@ -4,5 +4,52 @@
   }
   
 .glow-update {
-    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent yellow for glowing effect */
+    background-color: rgb(255, 255, 255, 0.3); /* Semi-transparent yellow for glowing effect */
+}
+
+.table-container {
+  display: block;
+  position: relative;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container thead {
+  display: block;
+  position: sticky;
+  top: 0;
+}
+
+.table-container tbody {
+  display: block;
+  max-height: calc(100vh - 210px); /* Adjust the height as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.table-container th, .table-container td {
+  min-width: 120px; /* Adjust the minimum width as needed */
+  padding: 8px;
+  text-align: left;
+}
+
+.custom-scrollbar {
+  scrollbar-color: #4a5568 #2d3748; /* Adjust colors as needed */
+  scrollbar-width: thin;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4a5568;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #2d3748;
 }

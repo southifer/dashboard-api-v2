@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Content from './components/Content';
-import Home from './components/Home';            // Make sure this file exists
-import NavigationBar from './components/NavigationBar'; // Make sure this file exists
+import Home from './components/Home';
+import World from './components/World';
+import NavigationBar from './components/NavigationBar';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Content />} />
-              {/* Add more routes here if needed */}
+              <Route path="/world" element={<World />} />
             </Routes>
           </div>
         </div>
